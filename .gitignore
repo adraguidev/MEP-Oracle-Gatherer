@@ -1,0 +1,19 @@
+# Output directories
+mep_oracle_*/
+
+# Logs
+*.log
+
+# Compressed deliverables
+*.tar.gz
+*.zip
+
+# PyInstaller build
+build/
+dist/
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
