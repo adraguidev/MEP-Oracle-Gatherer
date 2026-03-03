@@ -47,6 +47,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add MEP_Oracle_Gatherer.exe
           git diff --cached --quiet || git commit -m "Build MEP_Oracle_Gatherer.exe [skip ci]"
+          git pull --rebase origin main
           git push origin main
 
       - name: Upload artifact
@@ -89,6 +90,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add MEP_Oracle_Gatherer-linux
           git diff --cached --quiet || git commit -m "Build MEP_Oracle_Gatherer-linux [skip ci]"
+          git pull --rebase origin main
           git push origin main
 
       - name: Upload artifact
