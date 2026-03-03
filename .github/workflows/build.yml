@@ -6,6 +6,8 @@ on:
     paths:
       - 'mep_oracle_launcher.py'
       - 'mep_oracle_launcher.spec'
+      - 'gather_oracle.sh'
+      - 'tests/**'
       - '.github/workflows/build.yml'
     tags:
       - 'v*'
@@ -27,10 +29,23 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install pyinstaller
+        run: pip install pyinstaller pytest
+
+      - name: Run tests
+        run: |
+          if (Test-Path tests/) { python -m pytest tests/ -v } else { Write-Host "No tests directory found, skipping" }
 
       - name: Build EXE
         run: pyinstaller mep_oracle_launcher.spec
+
+      - name: Commit EXE to repo
+        run: |
+          copy dist\MEP_Oracle_Gatherer.exe MEP_Oracle_Gatherer.exe
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add MEP_Oracle_Gatherer.exe
+          git diff --cached --quiet || git commit -m "Build MEP_Oracle_Gatherer.exe [skip ci]"
+          git push
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -54,10 +69,23 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install pyinstaller
+        run: pip install pyinstaller pytest
+
+      - name: Run tests
+        run: |
+          if [ -d tests/ ]; then python -m pytest tests/ -v; else echo "No tests directory found, skipping"; fi
 
       - name: Build binary
         run: pyinstaller mep_oracle_launcher.spec
+
+      - name: Commit binary to repo
+        run: |
+          cp dist/MEP_Oracle_Gatherer MEP_Oracle_Gatherer-linux
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add MEP_Oracle_Gatherer-linux
+          git diff --cached --quiet || git commit -m "Build MEP_Oracle_Gatherer-linux [skip ci]"
+          git push
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
