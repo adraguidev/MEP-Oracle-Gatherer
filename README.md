@@ -27,14 +27,24 @@ Desarrollado por **Integratel Peru - Stefanini Group**.
 
 ## Uso
 
-### Opcion 1: Ejecutable portable (recomendado)
+### Opcion 1: Script standalone (recomendado)
 
-#### Windows
-Copiar `MEP_Oracle_Gatherer.exe` (o `MEP_Oracle_Gatherer.bat`) al servidor y ejecutar:
+#### Windows (.bat) — recomendado
+Copiar unicamente `MEP_Oracle_Gatherer.bat` al servidor y ejecutar:
 
 ```
-MEP_Oracle_Gatherer.exe
+MEP_Oracle_Gatherer.bat
 ```
+
+El `.bat` es **100% standalone** — no requiere Python ni el `.exe`. Solo necesita `sqlplus` en PATH. Ejecuta las 31 queries directamente contra Oracle, identico al `.sh` de Linux.
+
+Tambien acepta parametros CLI:
+```
+MEP_Oracle_Gatherer.bat SIMPLE_PROD mep_reader
+MEP_Oracle_Gatherer.bat SIMPLE_PROD mep_reader C:\temp\output
+```
+
+> **Nota:** El `.exe` compilado con PyInstaller suele ser detectado como falso positivo por antivirus. El `.bat` evita este problema completamente ya que es un script de texto plano.
 
 #### Linux
 Copiar `MEP_Oracle_Gatherer` (binario) o `gather_oracle.sh` al servidor:
@@ -199,7 +209,7 @@ Se excluyen automaticamente los schemas de sistema Oracle:
 |---------|-------------|
 | `mep_oracle_launcher.py` | Launcher Python cross-platform (Windows + Linux) |
 | `mep_oracle_launcher.spec` | PyInstaller spec para compilar ejecutable |
-| `MEP_Oracle_Gatherer.bat` | Launcher Windows (.bat) — usa .exe si existe, sino Python |
+| `MEP_Oracle_Gatherer.bat` | Script standalone Windows — ejecuta queries directo con sqlplus |
 | `gather_oracle.sh` | Script bash standalone (alternativa para Linux) |
 
 ## Resultado esperado
